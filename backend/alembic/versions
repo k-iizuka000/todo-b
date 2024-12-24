@@ -1,0 +1,128 @@
+"""create initial tables
+
+Revision ID: 001
+Revises: 
+Create Date: 2024-12-24 10:22:00.000000
+"""
+from alembic import op
+import sqlalchemy as sa
+
+# revision identifiers
+revision = '001'
+down_revision = None
+branch_labels = None
+depends_on = None
+
+def upgrade():
+    # Users table
+    op.create_table(
+        'users',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('username', sa.String(50), unique=True, nullable=False),
+        sa.Column('email', sa.String(100), unique=True, nullable=False),
+        sa.Column('password_hash', sa.String(200), nullable=False),
+        sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP')),
+        sa.Column('updated_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'))
+    )
+
+    # Prompts table
+    op.create_table(
+        'prompts',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('user_id', sa.Integer(), sa.ForeignKey('users.id', ondelete='CASCADE')),
+        sa.Column('title', sa.String(200), nullable=False),
+        sa.Column('content', sa.Text(), nullable=False),
+        sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP')),
+        sa.Column('updated_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'))
+    )
+
+def downgrade():
+    op.drop_table('prompts')
+    op.drop_table('users')
+"""add comments and likes tables
+
+Revision ID: 002
+Revises: 001
+Create Date: 2024-12-24 10:23:00.000000
+"""
+from alembic import op
+import sqlalchemy as sa
+
+# revision identifiers
+revision = '002'
+down_revision = '001'
+branch_labels = None
+depends_on = None
+
+def upgrade():
+    # Comments table
+    op.create_table(
+        'comments',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('prompt_id', sa.Integer(), sa.ForeignKey('prompts.id', ondelete='CASCADE')),
+        sa.Column('user_id', sa.Integer(), sa.ForeignKey('users.id', ondelete='CASCADE')),
+        sa.Column('content', sa.Text(), nullable=False),
+        sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'))
+    )
+
+    # Likes table
+    op.create_table(
+        'likes',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('prompt_id', sa.Integer(), sa.ForeignKey('prompts.id', ondelete='CASCADE')),
+        sa.Column('user_id', sa.Integer(), sa.ForeignKey('users.id', ondelete='CASCADE')),
+        sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP')),
+        sa.UniqueConstraint('prompt_id', 'user_id', name='unique_prompt_like')
+    )
+
+def downgrade():
+    op.drop_table('likes')
+    op.drop_table('comments')
+"""add tags and categories
+
+Revision ID: 003
+Revises: 002
+Create Date: 2024-12-24 10:24:00.000000
+"""
+from alembic import op
+import sqlalchemy as sa
+
+# revision identifiers
+revision = '003'
+down_revision = '002'
+branch_labels = None
+depends_on = None
+
+def upgrade():
+    # Categories table
+    op.create_table(
+        'categories',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('name', sa.String(50), unique=True, nullable=False),
+        sa.Column('description', sa.String(200))
+    )
+
+    # Tags table
+    op.create_table(
+        'tags',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('name', sa.String(30), unique=True, nullable=False)
+    )
+
+    # Prompt-Tag relationship table
+    op.create_table(
+        'prompt_tags',
+        sa.Column('prompt_id', sa.Integer(), sa.ForeignKey('prompts.id', ondelete='CASCADE')),
+        sa.Column('tag_id', sa.Integer(), sa.ForeignKey('tags.id', ondelete='CASCADE')),
+        sa.PrimaryKeyConstraint('prompt_id', 'tag_id')
+    )
+
+    # Add category_id to prompts table
+    op.add_column('prompts', sa.Column('category_id', sa.Integer(), 
+                  sa.ForeignKey('categories.id', ondelete='SET NULL')))
+
+def downgrade():
+    op.drop_column('prompts', 'category_id')
+    op.drop_table('prompt_tags')
+    op.drop_table('tags')
+    op.drop_table('categories')

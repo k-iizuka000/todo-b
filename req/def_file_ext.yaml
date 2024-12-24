@@ -1,0 +1,273 @@
+# 共通の制約を定義
+anchors:
+  typescript_constraints: &typescript_constraints
+    - TypeScriptの厳格な型チェックを使用すること
+    - eslintとprettierを適用すること
+    - コンポーネントはReact.FCを使用して型付けすること
+    - 非同期処理にはasync/awaitを使用すること
+    - パフォーマンス最適化（メモ化、コード分割など）を行うこと
+    - アクセシビリティガイドライン（WCAG 2.1）に準拠すること
+
+  python_constraints: &python_constraints
+    - PEP 8スタイルガイドに従うこと
+    - type hintを使用すること
+    - 非同期処理にはasyncio/aioを使用すること
+    - ユニットテストを作成すること（カバレッジ80%以上）
+    - パフォーマンス最適化（非同期処理、キャッシュなど）を行うこと
+
+  security_constraints: &security_constraints
+    - HTTPS通信を強制すること
+    - OAuth2.0による認証を実装すること
+    - データの暗号化（転送中および保存時）を行うこと
+    - OWASP Top 10に対応すること
+
+  compliance_constraints: &compliance_constraints
+    - GDPR準拠
+    - CCPA準拠
+    - 業界固有の規制への対応
+
+  functional_requirements: &functional_requirements
+    - ユーザー登録・認証機能の実装
+    - プロンプト投稿機能の実装
+    - プロンプト閲覧機能の実装
+    - プロンプト検索・フィルタ機能の実装
+    - コメント・フィードバック機能の実装
+    - 評価機能の実装
+    - プロフィール機能の実装
+    - 通知機能の実装
+    - シェア機能の実装
+    - 管理者機能の実装
+
+rules:
+  # その他のプロジェクトルートファイル規則
+  './':
+    # プロジェクトルートディレクトリの規則
+    - '^\.gitignore$': |
+        Gitで無視するファイルを定義
+        環境固有の一時ファイルの除外
+        ビルド成果物の除外
+        機密情報を含むファイルの除外
+
+    - '^README\.md$': |
+        プロジェクトの簡潔な概要
+        主要機能のハイライト
+        クイックスタートガイド
+        貢献方法の説明
+        ライセンス情報へのリンク
+        ドキュメントへのリンク:
+          - '[システムアーキテクチャ](docs/architecture.md)'
+          - '[セットアップ手順](docs/setup.md)'
+          - '[トラブルシューティング](docs/troubleshooting.md)'
+
+    - '^LICENSE$': |
+        プロジェクトのライセンス情報を記載
+        著作権表示
+        使用条件の明記
+        免責事項の記載
+
+  # ドキュメント規則
+  '^docs/.*\.md$':
+    - *functional_requirements
+    - '^docs/architecture\.md$': |
+        システムアーキテクチャの詳細説明
+        コンポーネント間の関係図
+        データフロー図
+        スケーラビリティと可用性の設計
+        セキュリティ設計の概要
+        パフォーマンス最適化戦略
+    - '^docs/setup\.md$': |
+        詳細な開発環境のセットアップ手順
+        必要な依存関係のインストール方法
+        環境変数の設定方法
+        ローカル開発の始め方
+        テストの実行方法
+        デバッグ環境の設定
+    - '^docs/troubleshooting\.md$': |
+        一般的な問題とその解決方法
+        デバッグのヒントとテクニック
+        よくある質問と回答
+        パフォーマンス問題の診断と解決方法
+        エラーコードとその意味の説明
+  
+  # GitHub関連ファイル規則
+  '^\.github/workflows/.*\.yml$':
+    - '^\.github/workflows/frontend-ci\.yml$': |
+        フロントエンドのCI設定
+        ビルド、テスト、リントの実行
+        依存関係のキャッシュ設定
+        成果物のアップロード設定
+    - '^\.github/workflows/backend-ci\.yml$': |
+        バックエンドのCI設定
+        ユニットテスト、統合テストの実行
+        コードカバレッジの計測
+        静的解析の実行
+    - '^\.github/workflows/infra-ci\.yml$': |
+        インフラのCI設定
+        Terraformの構文チェック
+        インフラコードのセキュリティスキャン
+        ドライランの実行
+    - '^\.github/workflows/deploy\.yml$': |
+        デプロイプロセスの管理
+        環境ごとのデプロイ設定
+        ロールバック手順の定義
+        デプロイ後のヘルスチェック
+
+  # フロントエンド規則
+  '^frontend/.*\.tsx$':
+    - *typescript_constraints
+    - *security_constraints
+    - *functional_requirements
+    - page.tsx: |
+        Next.js 13のApp Routerに準拠したページ実装
+        SEO対策（メタタグ、構造化データの設定）
+        レスポンシブデザインの実装
+        アクセシビリティへの配慮（WAI-ARIA準拠）
+        ページロード時間は2秒以内を目標とすること
+    - layout.tsx: |
+        全体のレイアウト構造の定義
+        共通コンポーネント（Header, Footer, Sidebar）の配置
+        グローバルスタイルの適用
+        パフォーマンス最適化（レイアウトシフトの最小化など）
+    - '^frontend/components/.*\.tsx$': |
+        再利用可能なコンポーネント
+        プロップスの型定義
+        メモ化（React.memo）の適切な使用
+        スタイルはCSS Modulesまたはstyled-componentsを使用
+        パフォーマンスとアクセシビリティを考慮した実装
+
+  # バックエンド規則
+  '^backend/.*\.py$':
+    - *python_constraints
+    - *security_constraints
+    - *compliance_constraints
+    - *functional_requirements
+    - main.py: |
+        FastAPIアプリケーションの初期化
+        ルーターの登録
+        ミドルウェアの設定（CORS, 認証など）
+        エラーハンドリングの実装
+        パフォーマンスモニタリングの設定
+    - '^backend/app/api/.*\.py$': |
+        RESTful APIエンドポイントの実装
+        入力バリデーションの実装
+        レスポンスの適切な型付け
+        エラーハンドリングとエラーレスポンスの標準化
+        APIレスポンス時間は平均500ms以内を目標とすること
+    - '^backend/app/models/.*\.py$': |
+        SQLAlchemyを使用したORMモデルの定義
+        リレーションシップの設定
+        インデックスの適切な設定
+        データ整合性制約の設定
+        パフォーマンスを考慮したクエリ最適化
+    - '^backend/app/schemas/.*\.py$': |
+        Pydanticモデルの定義
+        バリデーションルールの設定
+        APIレスポンスの型定義
+    - '^backend/app/services/.*\.py$': |
+        ビジネスロジックの実装
+        外部APIとの連携処理
+        トランザクション管理
+        非同期処理の最適化
+    - '^backend/app/core/.*\.py$': |
+        アプリケーション全体で使用する共通機能の実装
+        設定管理
+        ロギング設定
+        データベース接続管理
+        キャッシュ戦略の実装
+
+  # インフラ規則
+  '^infra/terraform/.*\.tf$':
+    - '^infra/terraform/modules/vpc/main.tf': |
+        VPCの設定（CIDR, サブネット, ルートテーブル）
+        セキュリティグループの設定
+        NATゲートウェイの設定
+    - '^infra/terraform/modules/eks/main.tf': |
+        EKSクラスターの設定
+        ノードグループの設定
+        IAMロールとポリシーの設定
+        オートスケーリングの設定
+    - '^infra/terraform/modules/rds/main.tf': |
+        RDSインスタンスの設定
+        バックアップ設定
+        セキュリティグループの設定
+        パフォーマンス最適化（インスタンスタイプ、ストレージなど）
+    - '^infra/terraform/modules/s3/main.tf': |
+        S3バケットの作成
+        バケットポリシーの設定
+        暗号化の設定
+        ライフサイクルポリシーの設定
+
+  '^infra/kubernetes/.*\.yaml$':
+    - '^infra/kubernetes/base/deployment.yaml': |
+        アプリケーションのデプロイメント設定
+        リソース制限の設定
+        ヘルスチェックの設定
+        水平ポッドオートスケーラー（HPA）の設定
+    - '^infra/kubernetes/base/service.yaml': |
+        サービスの設定（ClusterIP, NodePort, LoadBalancer）
+    - '^infra/kubernetes/base/ingress.yaml': |
+        Ingressの設定
+        TLS証明書の設定
+        レート制限の設定
+    - '^infra/kubernetes/overlays/prod/kustomization.yaml': |
+        本番環境固有の設定
+        リソースのスケーリング設定
+        高可用性の確保（99.9%以上のサービス稼働率）
+
+  # その他の規則
+  '\.env':
+    - '.env': |
+        環境変数設定ファイル
+        セキュリティに関する変数（APIキー、シークレットなど）
+        データベース接続情報
+        環境固有の設定値
+        機密情報の適切な管理
+
+  '^docs/api/.*\.yaml$':
+    - '^docs/api/openapi.yaml': |
+        OpenAPI仕様定義ファイル
+        APIエンドポイントの詳細な定義
+        リクエスト/レスポンスの構造とスキーマ
+        認証方式の定義
+        レート制限やクォータの定義
+
+  '^\.github/workflows/.*\.yml$':
+    - '^.github/workflows/*.yml': |
+        GitHub Actions ワークフロー定義ファイル
+        CI/CDパイプラインの定義
+        テスト、ビルド、デプロイプロセスの自動化
+        環境変数の安全な管理
+        パフォーマンステストの自動化
+
+  'Dockerfile':
+    - 'Dockerfile': |
+        Dockerイメージビルド定義ファイル
+        マルチステージビルドの使用
+        ベースイメージの最適化
+        セキュリティ考慮（非rootユーザーの使用）
+        イメージサイズの最小化
+
+# 非機能要件
+non_functional_requirements:
+  monitoring:
+    - ログ集中管理システムの導入
+    - アプリケーションパフォーマンスモニタリング（APM）の実装
+    - アラート設定と通知システムの構築
+  performance:
+    - ページロード時間2秒以内
+    - APIレスポンス時間500ms以内
+    - 99.9%以上の可用性
+  security:
+    - HTTPS通信の強制
+    - OAuth2.0認証の実装
+    - データの暗号化（転送中および保存時）
+  scalability:
+    - 水平スケーリングの実装
+    - キャッシュ戦略の最適化
+  usability:
+    - 直感的なユーザーインターフェース
+    - レスポンシブデザイン
+    - 多言語対応
+  data_management:
+    - ユーザーデータのエクスポート・インポート機能
+    - データバックアップと復旧計画

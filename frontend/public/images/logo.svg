@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background shape -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B4FBB;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main icon - representing a hub/connection point -->
+  <circle cx="35" cy="25" r="15" fill="url(#logoGradient)"/>
+  <circle cx="35" cy="25" r="7" fill="white"/>
+
+  <!-- Connected dots representing network/community -->
+  <circle cx="15" cy="15" r="3" fill="#4A90E2"/>
+  <circle cx="55" cy="15" r="3" fill="#6B4FBB"/>
+  <circle cx="15" cy="35" r="3" fill="#6B4FBB"/>
+  <circle cx="55" cy="35" r="3" fill="#4A90E2"/>
+
+  <!-- Connection lines -->
+  <line x1="15" y1="15" x2="35" y2="25" stroke="#4A90E2" stroke-width="1"/>
+  <line x1="55" y1="15" x2="35" y2="25" stroke="#6B4FBB" stroke-width="1"/>
+  <line x1="15" y1="35" x2="35" y2="25" stroke="#6B4FBB" stroke-width="1"/>
+  <line x1="55" y1="35" x2="35" y2="25" stroke="#4A90E2" stroke-width="1"/>
+
+  <!-- Text "PromptHub" -->
+  <text x="80" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333333">
+    PromptHub
+  </text>
+</svg>

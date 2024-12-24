@@ -1,0 +1,45 @@
+/fonts
+├── Roboto/
+│   ├── Roboto-Regular.woff2
+│   ├── Roboto-Medium.woff2
+│   ├── Roboto-Bold.woff2
+│   └── Roboto-Light.woff2
+├── Inter/
+│   ├── Inter-Regular.woff2
+│   ├── Inter-Medium.woff2
+│   ├── Inter-Bold.woff2
+│   └── Inter-Light.woff2
+└── README.md
+# Custom Fonts Directory
+
+このディレクトリには、PromptHub AIプラットフォームで使用するカスタムフォントファイルが格納されています。
+
+## 使用フォント
+
+- Roboto (Google Fonts)
+  - Regular
+  - Medium
+  - Bold
+  - Light
+
+- Inter (Google Fonts)
+  - Regular
+  - Medium
+  - Bold
+  - Light
+
+## フォントの使用方法
+
+1. フォントファイルは.woff2形式を使用し、最適なパフォーマンスとブラウザ互換性を確保しています。
+
+2. CSSでの使用例：
+
+## 注意事項
+
+- フォントファイルはライセンスに従って使用してください
+- パフォーマンスを考慮し、必要なウェイトのみを使用してください
+- font-display: swapを使用し、フォントの読み込み中でもテキストが表示されるようにしてください
+
+## ライセンス
+
+使用するフォントのライセンスを必ず確認し、適切に記載してください。

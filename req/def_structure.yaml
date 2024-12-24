@@ -1,0 +1,211 @@
+- frontend:
+    - src:
+        - app:
+            - '(auth)':
+                - login:
+                    - page.tsx: "ログインページのコンテンツを表示するファイル。"
+                - register:
+                    - page.tsx: "ユーザー登録ページのコンテンツを表示するファイル。"
+            - '(dashboard)':
+                - layout.tsx: "ダッシュボード関連ページの共通レイアウト。"
+                - page.tsx: "ダッシュボードのメインページ。"
+                - '[id]':
+                    - page.tsx: "特定のダッシュボードページ。ユーザーがサマリーや統計を確認する。"
+            - '(prompts)':
+                - layout.tsx: "プロンプト関連ページの共通レイアウト。"
+                - page.tsx: "プロンプト一覧ページ。"
+                - new:
+                    - page.tsx: "新規プロンプト作成ページ。"
+                - '[id]':
+                    - page.tsx: "特定のプロンプトを表示・編集するページ。"
+            - '(profile)':
+                - layout.tsx: "プロフィール関連ページの共通レイアウト。"
+                - page.tsx: "ユーザープロフィールページ。"
+                - '[id]':
+                    - page.tsx: "特定のユーザーのプロフィールを表示するページ。"
+            - '(search)':
+                - layout.tsx: "検索関連ページの共通レイアウト。"
+                - page.tsx: "プロンプト検索ページ。"
+            - '(admin)':
+                - layout.tsx: "管理者向けページの共通レイアウト。"
+                - page.tsx: "管理者ダッシュボードのメインページ。"
+                - '[id]':
+                    - page.tsx: "特定の管理者向け設定やユーザー管理を行うページ。"
+            - api:
+                - auth:
+                    - '[...nextauth]':
+                        - route.ts: "NextAuthを使った認証ルートを管理するファイル。"
+                - prompts:
+                    - '[id]':
+                        - route.ts: "プロンプトデータを処理するAPIエンドポイント。"
+                - comments:
+                    - '[id]':
+                        - route.ts: "コメントデータを処理するAPIエンドポイント。"
+                - users:
+                    - '[id]':
+                        - route.ts: "ユーザーデータを処理するAPIエンドポイント。"
+                - notifications:
+                    - route.ts: "通知データを処理するAPIエンドポイント。"
+            - layout.tsx: "アプリケーション全体の共通レイアウト。"
+            - page.tsx: "トップページのコンテンツを表示するファイル。"
+            - not-found.tsx: "404エラーページ。"
+            - error.tsx: "エラーハンドリングコンポーネント。"
+            - loading.tsx: "ローディング状態を表示するコンポーネント。"
+        - components:
+            - common:
+                - Header.tsx: "共通のヘッダーコンポーネント。"
+                - Footer.tsx: "共通のフッターコンポーネント。"
+                - Sidebar.tsx: "サイドバーのナビゲーションコンポーネント。"
+                - LoadingSpinner.tsx: "読み込み中に表示するスピナーコンポーネント。"
+            - prompts:
+                - PromptCard.tsx: "プロンプトカードを表示するコンポーネント。"
+                - PromptForm.tsx: "プロンプト作成・編集フォームコンポーネント。"
+                - PromptList.tsx: "プロンプト一覧を表示するコンポーネント。"
+            - comments:
+                - CommentForm.tsx: "コメント投稿フォームコンポーネント。"
+                - CommentList.tsx: "コメント一覧を表示するコンポーネント。"
+            - profile:
+                - ProfileHeader.tsx: "プロフィールヘッダーを表示するコンポーネント。"
+                - ActivityFeed.tsx: "ユーザーの活動履歴を表示するコンポーネント。"
+            - search:
+                - SearchBar.tsx: "検索バーコンポーネント。"
+                - FilterOptions.tsx: "検索フィルターオプションコンポーネント。"
+            - notifications:
+                - NotificationList.tsx: "通知一覧を表示するコンポーネント。"
+            - admin:
+                - UserManagement.tsx: "ユーザー管理を行うコンポーネント。"
+                - ContentModeration.tsx: "コンテンツモデレーションを行うコンポーネント。"
+        - lib:
+            - api.ts: "APIリクエストのラッパー関数を提供するファイル。"
+            - auth.ts: "認証関連のロジックを提供するファイル。"
+        - hooks:
+            - useUser.ts: "ユーザー情報を取得するためのカスタムフック。"
+            - usePrompts.ts: "プロンプトデータを管理するカスタムフック。"
+            - useComments.ts: "コメントデータを管理するカスタムフック。"
+            - useNotifications.ts: "通知データを管理するカスタムフック。"
+        - styles:
+            - globals.css: "全体のスタイル設定を行うCSSファイル。"
+        - utils:
+            - formatting.ts: "フォーマット関連のユーティリティ関数を提供するファイル。"
+            - validation.ts: "入力データのバリデーション関数を提供するファイル。"
+        - config:
+            - constants.ts: "アプリ全体で使用する定数を管理するファイル。"
+        - types:
+            - user.ts: "ユーザー関連の型定義ファイル。"
+            - prompt.ts: "プロンプト関連の型定義ファイル。"
+            - comment.ts: "コメント関連の型定義ファイル。"
+            - notification.ts: "通知関連の型定義ファイル。"
+    - public:
+        - images:
+            - logo.svg: "アプリのロゴ画像ファイル。"
+            - favicon.ico: "ブラウザタブに表示されるファビコン。"
+        - fonts: "カスタムフォントを格納するディレクトリ。"
+    - .env.local: "ローカル環境の設定を行う環境変数ファイル。"
+    - .env.production: "本番環境の設定を行う環境変数ファイル。"
+    - next.config.js: "Next.jsの設定ファイル。"
+    - tailwind.config.js: "Tailwind CSSの設定ファイル。"
+    - postcss.config.js: "PostCSSの設定ファイル。"
+    - tsconfig.json: "TypeScriptの設定ファイル。"
+    - package.json: "プロジェクトの依存関係とスクリプトを管理するファイル。"
+
+- backend:
+    - app:
+        - api:
+            - v1: 
+                - auth:
+                    - __init__.py: "認証APIの初期化ファイル。"
+                    - routes.py: "認証APIルートを定義するファイル。"
+                - prompts:
+                    - __init__.py: "プロンプトAPIの初期化ファイル。"
+                    - routes.py: "プロンプトAPIルートを定義するファイル。"
+                - comments:
+                    - __init__.py: "コメントAPIの初期化ファイル。"
+                    - routes.py: "コメントAPIルートを定義するファイル。"
+                - users:
+                    - __init__.py: "ユーザーAPIの初期化ファイル。"
+                    - routes.py: "ユーザーAPIルートを定義するファイル。"
+                - notifications:
+                    - __init__.py: "通知APIの初期化ファイル。"
+                    - routes.py: "通知APIルートを定義するファイル。"
+                - admin:
+                    - __init__.py: "管理APIの初期化ファイル。"
+                    - routes.py: "管理APIルートを定義するファイル。"
+        - core:
+            - __init__.py: "アプリケーションコアの初期化ファイル。"
+            - config.py: "アプリケーション設定を行うファイル。"
+            - security.py: "セキュリティ関連の設定を行うファイル。"
+            - database.py: "データベース接続を管理するファイル。"
+        - models:
+            - __init__.py: "データベースモデルの初期化ファイル。"
+            - user.py: "ユーザーモデルを定義するファイル。"
+            - prompt.py: "プロンプトモデルを定義するファイル。"
+            - comment.py: "コメントモデルを定義するファイル。"
+            - notification.py: "通知モデルを定義するファイル。"
+        - schemas:
+            - __init__.py: "スキーマの初期化ファイル。"
+            - user.py: "ユーザースキーマを定義するファイル。"
+            - prompt.py: "プロンプトスキーマを定義するファイル。"
+            - comment.py: "コメントスキーマを定義するファイル。"
+            - notification.py: "通知スキーマを定義するファイル。"
+        - services:
+            - __init__.py: "サービスレイヤーの初期化ファイル。"
+            - auth.py: "認証関連のサービスを提供するファイル。"
+            - prompt_service.py: "プロンプト関連のサービスを提供するファイル。"
+            - comment_service.py: "コメント関連のサービスを提供するファイル。"
+            - notification_service.py: "通知関連のサービスを提供するファイル。"
+        - utils:
+            - __init__.py: "ユーティリティ関数の初期化ファイル。"
+            - logger.py: "ロギング設定を行うファイル。"
+            - helpers.py: "便利関数を提供するファイル。"
+        - main.py: "アプリケーションのエントリーポイント。"
+    - tests:
+        - conftest.py: "テストの共通設定を定義するファイル。"
+        - api: 
+            - test_auth.py: "認証機能のテストを行うファイル。"
+            - test_prompts.py: "プロンプト関連のテストを行うファイル。"
+            - test_comments.py: "コメント関連のテストを行うファイル。"
+            - test_notifications.py: "通知機能のテストを行うファイル。"
+        - unit:
+            - test_services.py: "サービスレイヤーのユニットテストを行うファイル。" 
+    - alembic:
+        - versions: "データベースマイグレーションのバージョンを管理するディレクトリ。"
+        - env.py: "Alembicの環境設定ファイル。"
+        - script.py.mako: "マイグレーションスクリプトのテンプレートファイル。"
+    - .env: "バックエンド環境の設定を行う環境変数ファイル。"
+    - requirements.txt: "Pythonパッケージの依存関係を管理するファイル。"
+    - Dockerfile: "Dockerイメージをビルドするための設定ファイル。"
+    - docker-compose.yml: "Dockerコンテナを管理するための設定ファイル。"
+
+- infra:
+    - terraform:
+        - modules:
+            - network: 
+                - vpc:
+                    - main.tf: "VPC設定を行うTerraformファイル。"
+                    - variables.tf: "VPCに関する変数を定義するファイル。"
+                    - outputs.tf: "VPCの出力情報を定義するファイル。"
+            - compute:
+                - eks:
+                    - main.tf: "EKS設定を行うTerraformファイル。"
+                    - variables.tf: "EKSに関する変数を定義するファイル。"
+                    - outputs.tf: "EKSの出力情報を定義するファイル。"
+            - database:
+                - rds:
+                    - main.tf: "RDS設定を行うTerraformファイル。"
+                    - variables.tf: "RDSに関する変数を定義するファイル。"
+                    - outputs.tf: "RDSの出力情報を定義するファイル。"
+            - storage:
+                - s3:
+                    - main.tf: "S3バケット設定を行うTerraformファイル。"
+                    - variables.tf: "S3に関する変数を定義するファイル。"
+                    - outputs.tf: "S3の出力情報を定義するファイル。"
+        - environments:
+            - prod:
+                - main.tf: "本番環境のTerraform設定ファイル。"
+                - variables.tf: "本番環境に関する変数を定義するファイル。"
+                - terraform.tfvars: "本番環境の具体的な設定値を定義するファイル。"
+            - staging:
+                - main.tf: "ステージング環境のTerraform設定ファイル。"
+                - variables.tf: "ステージング環境に関する変数を定義するファイル。"
+                - terraform.tfvars: "ステージング環境の具体的な設定値を定義するファイル。"
+        - backend.tf: "Terraformのバックエンド設定ファイル。"
